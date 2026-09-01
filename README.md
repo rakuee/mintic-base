@@ -1,8 +1,6 @@
 # mintic-base
 
-Plantilla base del curso de Minería de Datos
-
-**Pineda Lab**
+**Tonatiuh Lab**
 **ENES Morelia, UNAM**
 
 ## Sobre el proyecto
@@ -44,14 +42,6 @@ Plantilla base del curso de Minería de Datos
 
 Cada subcarpeta dentro de `mintic/` es un subpaquete de Python correspondiente a un reto del curso. El alumno desarrolla su implementación dentro del subpaquete que le sea asignado.
 
-## Clonar el repositorio
-
-Este es un repositorio privado. Para clonarlo, solicita acceso al equipo del curso y luego ejecuta:
-
-```bash
-git clone https://github.com/Pineda-Lab/mintic-base.git
-cd mintic-base
-```
 
 ## Instalación
 
