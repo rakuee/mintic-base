@@ -14,13 +14,14 @@ def percentil_manual(valores, q):
         return ordenados[0]
 
     pos = q * (n - 1)
-    piso = int(np.floor(pos))
-    techo = int(np.ceil(pos))
+    piso = int(np.floor(pos)) # redondear abajo
+    techo = int(np.ceil(pos)) # redondear arriba
 
     if piso == techo:
         return ordenados[piso]
 
     fraccion = pos - piso
+    #                                   calcula distancia          quetancerca del techo estamos
     return ordenados[piso] + (ordenados[techo] - ordenados[piso]) * fraccion
 #--------------------------------------------------------------------------------
 def impute_missing(data, strategy='mean', columns=None):
@@ -36,13 +37,12 @@ def impute_missing(data, strategy='mean', columns=None):
         if df[col].isnull().any():
             numeric_column = pd.api.types.is_numeric_dtype(df[col])
             
-            # Asignamos la estrategia 
             estrategia_actual = strategy
             
-            # Si se pidió mean o median pero la columna es de texto/categórica, usamos moda
             if strategy in ('mean', 'median') and not numeric_column:
                 estrategia_actual = 'mode'
 
+                # contar valores validos
             valores_validos = [x for x in df[col] if pd.notnull(x)]
             n = len(valores_validos)
             valor = None
@@ -128,6 +128,7 @@ def impute_missing(data, strategy='mean', columns=None):
     return resultado
 #----------------------------------------------------------------------------------------------------------------
 def detect_outliers(data, method='iqr', threshold=1.5):
+
     # Normalizar entrada a DataFrame
     if isinstance(data, pd.Series):
         data = data.to_frame()
@@ -185,6 +186,8 @@ def detect_outliers(data, method='iqr', threshold=1.5):
     return resultado
 #----------------------------------------------------------------------------------------------------------------
 def handle_outliers(data, method='iqr',action='trim', threshold=1.5):
+
+    #verificar que tenda un dataframe
     if isinstance(data, pd.Series):
         data = data.to_frame()
     elif isinstance(data, (list, np.ndarray)):
