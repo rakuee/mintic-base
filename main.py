@@ -1,6 +1,11 @@
 """Script ejecutor básico del proyecto mintic-base."""
 import pandas as pd
-
+from mintic.eda import  (
+    impute_missing,
+    plot_missing,
+    detect_outliers,
+    handle_outliers
+)
 DATASET_PATH = "data/sample_dataset.csv"
 
 
