@@ -20,3 +20,6 @@ if __name__ == "__main__":
 
     # TODO(alumno): importar el subpaquete de mintic que desee probar, p. ej.:
     # from mintic.kmeans import KMeansClustering
+#-----------------------------------------------------------------------------------
+# mintic/main.py
+from mintic.ensemble import build_random_forest, predict_ensemble
