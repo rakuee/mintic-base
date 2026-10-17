@@ -1,6 +1,7 @@
 from ucimlrepo import fetch_ucirepo
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 dataset = fetch_ucirepo(id=53)
 
@@ -172,3 +173,48 @@ def kmeans_fit(kmeans, verbose=True):
     kmeans['converged'] = converged
 
     return kmeans
+
+def inertia(kmeans, X):
+    X = np.asarray(X)
+    centros = np.asarray(kmeans['centroids'], dtype=float)[kmeans['labels']]  # centroide de cada punto
+    diferencias = X - centros
+    return float(np.sum(diferencias ** 2))
+
+def elbow(data, min=2, max=8, max_iter=1000, tol=0.001, randomstate=None):
+    # ---------- 1) Validación de parámetros ----------
+    if not isinstance(min, int) or not isinstance(max, int):
+        raise TypeError("'min' y 'max' deben ser enteros.")
+    if min < 1:
+        raise ValueError("'min' debe ser al menos 1.")
+    if max < min:
+        raise ValueError("'max' debe ser mayor o igual que 'min'.")
+
+    # ---------- 2) Entrenar un K-Means por cada k ----------
+    ks = list(range(min, max + 1))
+    inercias = []
+
+    for k in ks:
+        # Creamos la representación del modelo
+        km = create_kmeans(
+            data,
+            n_clusters=k,
+            max_iter=max_iter,
+            tol=tol,
+            randomstate=randomstate,
+        )
+        # Entrenamos (sin imprimir el log de cada iteración)
+        km = kmeans_fit(km, verbose=False)
+        # Calculamos la inercia final
+        inercias.append(inertia(km, km['data']))
+
+    # ---------- 3) Graficar ----------
+    plt.figure(figsize=(8, 5))
+    plt.plot(ks, inercias, marker="o", linewidth=2)
+    plt.title("Método del Codo")
+    plt.xlabel("Número de clusters (k)")
+    plt.ylabel("Inercia")
+    plt.xticks(ks)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+    return None

@@ -23,3 +23,6 @@ if __name__ == "__main__":
 #-----------------------------------------------------------------------------------
 # mintic/main.py
 from mintic.ensemble import build_random_forest, predict_ensemble
+
+from mintic.kmeans import euclidian_distance, create_kmeans, kmeans_fit, inertia, elbow
+
